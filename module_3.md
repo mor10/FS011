@@ -28,17 +28,19 @@ You can modify (filter/transform) existing dataframes with more data or a differ
 - Reorganize a dataframe by pulling variables (columns) from the original and adding a new isolated observation based on the value of each column (effectively turning the data on its side). This produces a _long_ dataframe (because more instances of observations means more rows).
 
 Example of long dataframe:
-
+```
 continent  country  2012  2013  2014  2015
 Africa     Algeria  26.1  25.8  25.8  25.6
+```
 
 Turns into
-
+```
 continent  country  year  mort
 Africa     Algeria  2012  26.1
 Africa     Algeria  2013  25.8
 Africa     Algeria  2014  25.8
 Africa     Algeria  2015  25.6
+```
 
 ## Reshaping with `.pivot()`
 `.pivot()` can be used to transform long dataframes into wide dataframes. For example, if you have a long df with a 'nutrition' column containing two variables - 'calories' and 'protein' - you can transform it into a wide df with a column for 'calories' and another for 'protein'.
