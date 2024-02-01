@@ -46,7 +46,7 @@ Africa     Algeria  2015  25.6
 `.pivot()` can be used to transform long dataframes into wide dataframes. For example, if you have a long df with a 'nutrition' column containing two variables - 'calories' and 'protein' - you can transform it into a wide df with a column for 'calories' and another for 'protein'.
 
 So for this:
-
+```
           name mfr nutrition  value
 0    Special K   K  calories    110
 1    Special K   K   protein      6
@@ -58,6 +58,7 @@ So for this:
 7     Cheerios   G   protein      6
 8     Wheaties   G  calories    100
 9     Wheaties   G   protein      3
+```
 
 We can reshape to wide df using this:
 
