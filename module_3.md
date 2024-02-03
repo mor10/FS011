@@ -175,3 +175,18 @@ Reset index using `.reset_index(drop=True)`
 
 ### Caveat
 Don't concat dfs horizontally when the rows are out of order. This causes chaos.
+
+## Joining Dataframes Using `.merge()`
+`.merge()` can only combine dataframes horizontally.
+
+`leftDataFrame.merge(rightDataFrame, left_on='left_column_name', right_on='right_column_name, how='inner', indicator=True)`
+
+### `how` parameter
+- `inner` - default - returns only rows present in both dfs.
+- `outer` - returns all rows. Sets resulting empty cells to `NaN`. Result rows sorted as both, left, right.
+- `left` - returns rows present in both dfs plus remaining rows in left.
+- `right` - returns rows present in both dfs plus remaining rows in right.
+
+### `indicator` parameter
+- `False` - default - does nothing
+- `True` - creates a new column `_merge` indicating `both`, `left_only`, or `right_only`
