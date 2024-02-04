@@ -179,7 +179,9 @@ Don't concat dfs horizontally when the rows are out of order. This causes chaos.
 ## Joining Dataframes Using `.merge()`
 `.merge()` can only combine dataframes horizontally.
 
-`leftDataFrame.merge(rightDataFrame, left_on='left_column_name', right_on='right_column_name, how='inner', indicator=True)`
+`leftDataFrame.merge(rightDataFrame, left_on='left_column_name', right_on='right_column_name', how='inner', indicator=True)`
+
+Note: `left_on` and `right_on` can be string or array
 
 ### `how` parameter
 - `inner` - default - returns only rows present in both dfs.

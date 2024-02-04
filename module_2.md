@@ -1,4 +1,4 @@
-## Using `.assign()`
+## Creating new columns using `.assign()`
 
 ### Expanded example
 
@@ -9,6 +9,10 @@ lego_details = (washed_lego.assign(
                     .sort_values('total_pieces', ascending=False)   
                )
 ```
+
+## Dropping columns with `.drop()`
+
+`candy = candy.drop(columns='coconut')`
 
 ## Filtering columns
 
