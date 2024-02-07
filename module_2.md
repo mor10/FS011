@@ -1,13 +1,12 @@
 # Module 2: Tables and Wrangling
 
-## Learning outcomes
-- Demonstrate how to rename columns of a dataframe using [`.rename()`](#Rename-columns-using-rename).
-- Create new or columns in a dataframe using [`.assign()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.assign.html) notation.
-- Drop columns in a dataframe using [`.drop()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.drop.html)
-- Use `df[]` notation to filter rows of a dataframe.
-- Calculate summary statistics on grouped objects using [`.groupby()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby) and [`.agg()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.agg.html#pandas.DataFrame.agg).
-- Explain when chaining is appropriate.
-- Demonstrate chaining over multiple lines and verbs.
+## Learning outcomes (ToC)
+- [Demonstrate how to rename columns of a dataframe using `.rename()`](#Rename-columns-using-rename).
+- [Create new or columns in a dataframe using `.assign()`](#Creating-new-columns-using-assign) notation.
+- [Drop columns in a dataframe using `.drop()`](#Dropping-columns-with-drop)
+- [Use `df[]` notation to filter rows of a dataframe.](#Filtering-columns-using-df-notation)
+- Calculate summary statistics on grouped objects using [`.groupby()`](#Calculate-summary-statistics-on-groups-using-groupby) and [`.agg()`](#Create-summary-statistics-using-agg).
+- [Sort rows using `.sort_values`](#Sort-rows-using-sort_values)
 
 ## Rename columns using `.rename()`
 ```python
@@ -158,7 +157,7 @@ print(updated_metrics_df)
 In this detailed example, the `drop()` method is first used to remove the row corresponding to product `B` by specifying its `index` label. Then, it's used again to drop the `Returns` column by setting `axis=1`. The operations are chained together, showcasing how `drop()` can be used flexibly to remove both rows and columns in a single statement. This method is essential for data cleaning and preprocessing, enabling you to easily remove irrelevant or unnecessary data from your DataFrame.
 
 
-## Filtering columns
+## Filtering columns using `df[]` notation
 Filtering columns in a Pandas DataFrame using the `df[]` notation is straightforward and intuitive. This approach is commonly used for selecting a subset of columns from the DataFrame by specifying the column names directly within square brackets. If you want to select a single column, you can pass the column name as a string. To select multiple columns, you pass a list of column names.
 
 Here's a basic example of selecting a single column:
@@ -299,9 +298,6 @@ aggregated_sales = grouped_sales.agg({
 print(aggregated_sales)
 ```
 In this detailed example, the `agg()` method is used to calculate the total `(sum)`, average `(mean)`, and maximum `(max)` revenue for each product. This approach provides a comprehensive overview of the sales performance of each product, showcasing the versatility of `agg()` for conducting sophisticated data analysis with minimal code.
-
-
-
 
 ## Sort rows using `.sort_values()`
 The [`.sort_values()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.sort_values.html) method in Pandas is utilized to sort a DataFrame or Series based on the values in one or more columns. This method offers flexibility in sorting, allowing ascending or descending order, and can handle missing values as specified. It's a fundamental tool for data analysis, enabling you to order your data in a meaningful way for inspection, reporting, or further analysis.
