@@ -2,7 +2,7 @@
 
 ## Learning outcomes (ToC)
 - [Demonstrate how to rename columns of a dataframe using `.rename()`](#Rename-columns-using-rename).
-- [Create new or columns in a dataframe using `.assign()`](#Creating-new-columns-using-assign) notation.
+- [Create new or columns in a dataframe using `.assign()` notation.](#Creating-new-columns-using-assign)
 - [Drop columns in a dataframe using `.drop()`](#Dropping-columns-with-drop)
 - [Use `df[]` notation to filter rows of a dataframe.](#Filtering-columns-using-df-notation)
 - Calculate summary statistics on grouped objects using [`.groupby()`](#Calculate-summary-statistics-on-groups-using-groupby) and [`.agg()`](#Create-summary-statistics-using-agg).
@@ -12,6 +12,9 @@
 ```python
 DataFrame.rename(mapper=None, *, index=None, columns=None, axis=None, copy=None, inplace=False, level=None, errors='ignore')
 ```
+
+_Rename columns or index labels._
+_Function / dict values must be unique (1-to-1). Labels not contained in a dict / Series will be left as-is. Extra labels listed don’t throw an error._
 
 The [`.rename()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.rename.html) method in Pandas is a flexible way to rename the labels of an index or columns in a DataFrame or Series. It's particularly useful for making data more readable or for preparing data for further analysis by ensuring column names and index labels conform to a preferred naming convention.
 
@@ -58,7 +61,13 @@ print(user_df)
 In this detailed example, the columns `first_name`, `last_name`, and `age` are renamed to `FirstName`, `LastName`, and `Age` for clarity. The index labels are also changed from numeric IDs to string IDs (e.g., `101` to `User101`) to make them more descriptive. This makes the DataFrame easier to understand and work with, especially for further data analysis or presentation.
 
 ## Creating new columns using `.assign()`
-The [`.assign()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.assign.html#pandas.DataFrame.assign) method 
+```python
+DataFrame.assign(**kwargs)
+```
+_Assign new columns to a DataFrame._
+_Returns a new object with all original columns in addition to new ones. Existing columns that are re-assigned will be overwritten._
+
+The [`.assign()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.assign.html) method 
 
 in Pandas is used for adding new columns to a DataFrame in a chainable way. This means you can create or modify columns while keeping the DataFrame immutable, thus not modifying the original DataFrame in place. Instead, `assign()` returns a new DataFrame with the added columns, making it particularly useful for creating pipelines that require intermediate steps without altering the original data.
 
