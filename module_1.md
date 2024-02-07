@@ -5,8 +5,8 @@
 - [Displaying rows using the `.head()` method](#Displaying-rows-using-the-head-method)
 - Demonstrate indexing and slicing with [`.loc[]`](#Selecting-data-from-a-dataframe-using-loc) and [`.iloc[]`](#Selecting-data-from-a-dataframe-using-iloc).
 - [Sort a dataframe using `.sort_values()`](#Sort-a-dataframe-using-sort_values).
-- Create simple summary statistics using [`.describe()`](#Create-simple-summary-statistics-using-describe).
-- Construct simple visualizations using Altair.
+- [Create simple summary statistics using `.describe()`](#Create-simple-summary-statistics-using-describe).
+- Construct simple visualizations using Altair. (__to be added__)
 - [Create a `.csv` file from a dataframe using `.to_csv()`](#Write-to-csv-files-using-to_csv).
 
 ## Reading `.csv` files with `pd.read_csv()`
