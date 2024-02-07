@@ -13,8 +13,9 @@
 DataFrame.rename(mapper=None, *, index=None, columns=None, axis=None, copy=None, inplace=False, level=None, errors='ignore')
 ```
 
-_Rename columns or index labels._
-_Function / dict values must be unique (1-to-1). Labels not contained in a dict / Series will be left as-is. Extra labels listed don’t throw an error._
+> Rename columns or index labels.
+>
+> Function / dict values must be unique (1-to-1). Labels not contained in a dict / Series will be left as-is. Extra labels listed don’t throw an error.
 
 The [`.rename()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.rename.html) method in Pandas is a flexible way to rename the labels of an index or columns in a DataFrame or Series. It's particularly useful for making data more readable or for preparing data for further analysis by ensuring column names and index labels conform to a preferred naming convention.
 
