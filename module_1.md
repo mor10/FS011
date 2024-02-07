@@ -1,21 +1,24 @@
 # Module 1: Python & Pandas
 
-## Learning Outcomes
-By the end of the module, students are expected to:
-
-- Describe the components of a Dataframe.
-- Read a standard `.csv` file using Pandas [`pd.read_csv()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html).
-- Load the `pandas`` library into Python.
-- Demonstrate indexing and slicing with [`.loc[]`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.loc.html#pandas.DataFrame.loc) and [`.iloc[]`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iloc.html#pandas.DataFrame.iloc).
-- Demonstrate Selecting columns of a dataframe using `df[]` notation.
-- Obtain values from a dataframe using `.loc[]`.
-- Sort a dataframe using [`.sort_values()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.sort_values.html#pandas.DataFrame.sort_values).
-- Create simple summary statistics using [`.describe()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.describe.html#pandas.DataFrame.describe).
+## Learning Outcomes (ToC)
+- [Read a standard `.csv` file using Pandas `pd.read_csv()`](#Reading-csv-files-with-pdread_csv).
+- [Displaying rows using the `.head()` method](#Displaying-rows-using-the-head-method)
+- Demonstrate indexing and slicing with [`.loc[]`](#Selecting-data-from-a-dataframe-using-loc) and [`.iloc[]`](#Selecting-data-from-a-dataframe-using-iloc).
+- [Sort a dataframe using `.sort_values()`](#Sort-a-dataframe-using-sort_values).
+- Create simple summary statistics using [`.describe()`](#Create-simple-summary-statistics-using-describe).
 - Construct simple visualizations using Altair.
-- Create a `.csv` file from a dataframe using [`.to_csv()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html#pandas.DataFrame.to_csv).
+- [Create a `.csv` file from a dataframe using `.to_csv()`](#Write-to-csv-files-using-to_csv).
 
 ## Reading `.csv` files with `pd.read_csv()`
-`pd.read_csv()` is a function from the Pandas library in Python, widely used for reading a CSV (Comma Separated Values) file into a Pandas DataFrame. This function is incredibly versatile, offering numerous parameters to handle different types of CSV files, including those with various delimiters, quoting characters, and file encodings. A DataFrame is a two-dimensional, size-mutable, and potentially heterogeneous tabular data structure with labeled axes (rows and columns). This makes `pd.read_csv()` a fundamental tool in data science for data loading and preprocessing.
+```python
+pandas.read_csv(filepath_or_buffer, *, sep=_NoDefault.no_default, delimiter=None, header='infer', names=_NoDefault.no_default, index_col=None, usecols=None, dtype=None, engine=None, converters=None, true_values=None, false_values=None, skipinitialspace=False, skiprows=None, skipfooter=0, nrows=None, na_values=None, keep_default_na=True, na_filter=True, verbose=_NoDefault.no_default, skip_blank_lines=True, parse_dates=None, infer_datetime_format=_NoDefault.no_default, keep_date_col=_NoDefault.no_default, date_parser=_NoDefault.no_default, date_format=None, dayfirst=False, cache_dates=True, iterator=False, chunksize=None, compression='infer', thousands=None, decimal='.', lineterminator=None, quotechar='"', quoting=0, doublequote=True, escapechar=None, comment=None, encoding=None, encoding_errors='strict', dialect=None, on_bad_lines='error', delim_whitespace=_NoDefault.no_default, low_memory=True, memory_map=False, float_precision=None, storage_options=None, dtype_backend=_NoDefault.no_default
+```
+
+>Read a comma-separated values (csv) file into DataFrame.
+>
+> Also supports optionally iterating or breaking of the file into chunks.
+
+[`pd.read_csv()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html) is a function from the Pandas library in Python, widely used for reading a CSV (Comma Separated Values) file into a Pandas DataFrame. This function is incredibly versatile, offering numerous parameters to handle different types of CSV files, including those with various delimiters, quoting characters, and file encodings. A DataFrame is a two-dimensional, size-mutable, and potentially heterogeneous tabular data structure with labeled axes (rows and columns). This makes `pd.read_csv()` a fundamental tool in data science for data loading and preprocessing.
 
 Here's a simple prototype example to demonstrate its basic usage:
 ```python
@@ -50,7 +53,19 @@ print(sales_df.head())
 In this example, `pd.read_csv()` is used to load the sales data into a DataFrame, providing a convenient way to work with the data using Python. The `.head()` method is then used to peek at the first few rows of the DataFrame to ensure it's loaded correctly. Finally, a new column, Total Sales, is created by multiplying the Price and Quantity Sold columns, demonstrating how Pandas can be used for data manipulation.
 
 ## Displaying rows using the `.head()` method
-The [`.head()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.head.html#pandas.DataFrame.head) method in Pandas is used to return the first n rows of a DataFrame or Series, where `n` defaults to `5` if not specified. This method is particularly useful for getting a quick overview of the dataset, especially when working with large datasets where displaying the entire data at once is impractical. It allows data scientists and analysts to quickly check the structure and the first few entries of the data without loading everything into the memory, which can be both time-consuming and resource-intensive.
+```python
+DataFrame.head(n=5)
+```
+
+> Return the first n rows.
+>
+> This function returns the first n rows for the object based on position. It is useful for quickly testing if your object has the right type of data in it.
+>
+> For negative values of n, this function returns all rows except the last |n| rows, equivalent to df[:n].
+>
+> If n is larger than the number of rows, this function returns all rows.
+
+The [`.head()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.head.html) method in Pandas is used to return the first n rows of a DataFrame or Series, where `n` defaults to `5` if not specified. This method is particularly useful for getting a quick overview of the dataset, especially when working with large datasets where displaying the entire data at once is impractical. It allows data scientists and analysts to quickly check the structure and the first few entries of the data without loading everything into the memory, which can be both time-consuming and resource-intensive.
 
 Here's a basic example of its usage:
 
@@ -107,7 +122,24 @@ Output:
 In this example, head(3) is used to quickly inspect the first three entries of the sales_data DataFrame, allowing you to verify the data's structure, column names, and a few values. This is an essential step in the initial data analysis phase, helping to ensure that subsequent data manipulation and analysis tasks proceed smoothly.
 
 ## Selecting data from a dataframe using `.loc[]`
-The `.loc[]` accessor in Pandas is a powerful tool for selecting data from a DataFrame. It allows for selecting rows and columns by labels. You can use it to access a single value, a series of values, rows, columns, or even slices of the DataFrame based on row and column labels. The syntax for `loc[]` includes specifying the row labels first, followed by the column labels, separated by a comma.
+```python
+property DataFrame.loc```
+
+> Access a group of rows and columns by label(s) or a boolean array.
+>
+> .loc[] is primarily label based, but may also be used with a boolean array.
+>
+> Allowed inputs are:
+>
+> - A single label, e.g. 5 or 'a', (note that 5 is interpreted as a label of the index, and never as an integer position along the index).
+- A list or array of labels, e.g. ['a', 'b', 'c'].
+- A slice object with labels, e.g. 'a':'f'.
+- A boolean array of the same length as the axis being sliced, e.g. [True, False, True].
+- An alignable boolean Series. The index of the key will be aligned before masking.
+- An alignable Index. The Index of the returned selection will be the input.
+- A callable function with one argument (the calling Series or DataFrame) and that returns valid output for indexing (one of the above)
+
+The [`.loc[]`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.loc.html) accessor in Pandas is a powerful tool for selecting data from a DataFrame. It allows for selecting rows and columns by labels. You can use it to access a single value, a series of values, rows, columns, or even slices of the DataFrame based on row and column labels. The syntax for `loc[]` includes specifying the row labels first, followed by the column labels, separated by a comma.
 
 Here's a basic example to illustrate its usage:
 
