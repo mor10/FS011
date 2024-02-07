@@ -69,9 +69,7 @@ DataFrame.assign(**kwargs)
 >
 > Returns a new object with all original columns in addition to new ones. Existing columns that are re-assigned will be overwritten.
 
-The [`.assign()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.assign.html) method 
-
-in Pandas is used for adding new columns to a DataFrame in a chainable way. This means you can create or modify columns while keeping the DataFrame immutable, thus not modifying the original DataFrame in place. Instead, `assign()` returns a new DataFrame with the added columns, making it particularly useful for creating pipelines that require intermediate steps without altering the original data.
+The [`.assign()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.assign.html) method in Pandas is used for adding new columns to a DataFrame in a chainable way. This means you can create or modify columns while keeping the DataFrame immutable, thus not modifying the original DataFrame in place. Instead, `assign()` returns a new DataFrame with the added columns, making it particularly useful for creating pipelines that require intermediate steps without altering the original data.
 
 Here's a simple example to illustrate its usage:
 
