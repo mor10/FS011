@@ -132,13 +132,13 @@ property DataFrame.loc
 >
 > Allowed inputs are:
 >
-> - A single label, e.g. 5 or 'a', (note that 5 is interpreted as a label of the index, and never as an integer position along the index).
-- A list or array of labels, e.g. ['a', 'b', 'c'].
-- A slice object with labels, e.g. 'a':'f'.
-- A boolean array of the same length as the axis being sliced, e.g. [True, False, True].
-- An alignable boolean Series. The index of the key will be aligned before masking.
-- An alignable Index. The Index of the returned selection will be the input.
-- A callable function with one argument (the calling Series or DataFrame) and that returns valid output for indexing (one of the above)
+> - A single label, e.g. `5` or `'a'`, (note that `5` is interpreted as a _label_ of the _index_, and __never__ as an integer position along the index).
+> - A list or array of labels, e.g. `['a', 'b', 'c']`.
+> - A slice object with labels, e.g. `'a':'f'`.
+> - A boolean array of the same length as the axis being sliced, e.g. `[True, False, True]`.
+> - An alignable boolean Series. The index of the key will be aligned before masking.
+> - An alignable Index. The Index of the returned selection will be the input.
+> - A `callable` function with one argument (the calling Series or DataFrame) and that returns valid output for indexing (one of the above)
 
 The [`.loc[]`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.loc.html) accessor in Pandas is a powerful tool for selecting data from a DataFrame. It allows for selecting rows and columns by labels. You can use it to access a single value, a series of values, rows, columns, or even slices of the DataFrame based on row and column labels. The syntax for `loc[]` includes specifying the row labels first, followed by the column labels, separated by a comma.
 
@@ -194,7 +194,25 @@ print(selected_info)
 In this example, `loc[]` is used to select rows for employees with IDs `E002` and `E004` and columns `Name` and `Salary`. This approach is particularly useful when dealing with large datasets and you need to extract specific pieces of information based on row or column labels, offering both flexibility and precision in data selection and manipulation.
 
 ## Selecting data from a dataframe using `.iloc[]`
-The `iloc[]` accessor in Pandas is utilized for integer-location based indexing, allowing for selections by the integer positions of the rows and columns. This method is particularly useful when you need to access elements by their index positions without referring to their labels. `iloc[]` works similarly to Python's standard list slicing, thus it supports a range of integer-based options, including individual integers, lists of integers, or even slice objects.
+```python
+property DataFrame.iloc
+```
+
+>Purely integer-location based indexing for selection by position.
+>
+> `.iloc[]` is primarily integer position based (from `0` to `length-1` of the axis), but may also be used with a boolean array.
+>
+> Allowed inputs are:
+> - An integer, e.g. `5`.
+> - A list or array of integers, e.g. `[4, 3, 0]`.
+> - A slice object with ints, e.g. `1:7`.
+> - A boolean array.
+> - A `callable` function with one argument (the calling Series or DataFrame) and that returns valid output for indexing (one of the above). This is useful in method chains, when you don’t have a reference to the calling object, but would like to base your selection on some value.
+> - A tuple of row and column indexes. The tuple elements consist of one of the above inputs, e.g. `(0, 1)`.
+>
+> `.iloc` will raise `IndexError` if a requested indexer is out-of-bounds, except _slice_ indexers which allow out-of-bounds indexing (this conforms with python/numpy _slice_ semantics).
+
+The [`iloc[]`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iloc.html) accessor in Pandas is utilized for integer-location based indexing, allowing for selections by the integer positions of the rows and columns. This method is particularly useful when you need to access elements by their index positions without referring to their labels. `iloc[]` works similarly to Python's standard list slicing, thus it supports a range of integer-based options, including individual integers, lists of integers, or even slice objects.
 
 Here's a basic example to demonstrate its usage:
 ```python
@@ -246,7 +264,12 @@ print(selected_grades)
 In this example, `iloc[]` is used to select specific rows (first and third students) and columns (Math and English) by their integer positions. This method is essential when the row or column labels are either unknown or irrelevant to the task at hand, allowing for efficient data selection based purely on positional indexing.
 
 ## Sort a dataframe using `.sort_values()`
-The `sort_values()` method in Pandas is used to sort a DataFrame or Series by the values along either the rows or columns. This function is highly flexible, allowing you to sort the data by one or more columns in ascending or descending order. Sorting is an essential operation when you are analyzing data, as it helps in understanding the data better, preparing it for further analysis, or improving its presentation.
+```python
+DataFrame.sort_values(by, *, axis=0, ascending=True, inplace=False, kind='quicksort', na_position='last', ignore_index=False, key=None)
+```
+> Sort by the values along either axis.
+
+The [`sort_values()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.sort_values.html) method in Pandas is used to sort a DataFrame or Series by the values along either the rows or columns. This function is highly flexible, allowing you to sort the data by one or more columns in ascending or descending order. Sorting is an essential operation when you are analyzing data, as it helps in understanding the data better, preparing it for further analysis, or improving its presentation.
 
 Here's a basic example of its usage with a DataFrame:
 
@@ -282,7 +305,17 @@ In this more detailed example, the DataFrame is sorted by `Age` in ascending ord
 The `sort_values()` method is a powerful tool for organizing your data, making it easier to analyze and visualize. Whether you're preparing your data for analysis, looking for specific patterns, or simply trying to get a better understanding of your dataset, sorting is an essential step in the data manipulation process.
 
 ## Create simple summary statistics using `.describe()`
-The `describe()` method in Pandas is a convenient tool for generating descriptive statistics that summarize the central tendency, dispersion, and shape of a dataset's distribution, excluding `NaN` values. It is primarily used on numerical columns but can also be applied to object-type columns to provide summary statistics such as count, unique, top, and freq. For numerical data, the summary statistics include count, mean, standard deviation, minimum, maximum, and the quartiles of the data.
+```python
+DataFrame.describe(percentiles=None, include=None, exclude=None)
+```
+
+> Generate descriptive statistics.
+>
+> Descriptive statistics include those that summarize the central tendency, dispersion and shape of a dataset’s distribution, excluding NaN values.
+>
+> Analyzes both numeric and object series, as well as DataFrame column sets of mixed data types. The output will vary depending on what is provided. Refer to the notes below for more detail.
+
+The [`describe()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.describe.html) method in Pandas is a convenient tool for generating descriptive statistics that summarize the central tendency, dispersion, and shape of a dataset's distribution, excluding `NaN` values. It is primarily used on numerical columns but can also be applied to object-type columns to provide summary statistics such as count, unique, top, and freq. For numerical data, the summary statistics include count, mean, standard deviation, minimum, maximum, and the quartiles of the data.
 
 Here's a basic example of its usage:
 
@@ -328,7 +361,13 @@ print(people_df.describe(include=[object]))
 In this example, `describe()` first provides an overview of the age and salary distributions, giving insights such as the average age and salary, the range (min to max), and the quartiles. Then, by including object types in the `describe()` call, you get a summary of the `Job Title` column, which shows how many unique job titles there are, the most common job title, and its frequency. 
 
 ## Write to `.csv` files using `.to_csv()`
-The `to_csv()` method in Pandas is used to write a DataFrame or Series to a comma-separated values (CSV) file. It provides a wide range of parameters to handle various CSV formatting options, such as specifying the delimiter, choosing the columns to write, and handling missing values. This method is essential for data scientists and analysts when they need to export Pandas DataFrames to CSV files, either for sharing data with others, further processing in other software, or simply for data storage.
+```python
+DataFrame.to_csv(path_or_buf=None, *, sep=',', na_rep='', float_format=None, columns=None, header=True, index=True, index_label=None, mode='w', encoding=None, compression='infer', quoting=None, quotechar='"', lineterminator=None, chunksize=None, date_format=None, doublequote=True, escapechar=None, decimal='.', errors='strict', storage_options=None)
+```
+
+> Write object to a comma-separated values (csv) file.
+
+The [`to_csv()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html) method in Pandas is used to write a DataFrame or Series to a comma-separated values (CSV) file. It provides a wide range of parameters to handle various CSV formatting options, such as specifying the delimiter, choosing the columns to write, and handling missing values. This method is essential for data scientists and analysts when they need to export Pandas DataFrames to CSV files, either for sharing data with others, further processing in other software, or simply for data storage.
 
 Here's a simple example to demonstrate its basic usage:
 
