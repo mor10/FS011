@@ -123,7 +123,8 @@ In this example, head(3) is used to quickly inspect the first three entries of t
 
 ## Selecting data from a dataframe using `.loc[]`
 ```python
-property DataFrame.loc```
+property DataFrame.loc
+```
 
 > Access a group of rows and columns by label(s) or a boolean array.
 >
