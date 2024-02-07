@@ -65,8 +65,9 @@ In this detailed example, the columns `first_name`, `last_name`, and `age` are r
 ```python
 DataFrame.assign(**kwargs)
 ```
-_Assign new columns to a DataFrame._
-_Returns a new object with all original columns in addition to new ones. Existing columns that are re-assigned will be overwritten._
+> Assign new columns to a DataFrame.
+>
+> Returns a new object with all original columns in addition to new ones. Existing columns that are re-assigned will be overwritten.
 
 The [`.assign()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.assign.html) method 
 
@@ -118,9 +119,16 @@ In this detailed example, two new columns are added:
 
 By using assign(), these new columns are added without altering the original sales_df DataFrame, and the operation is performed in a concise, chainable manner. This method enhances code readability and maintainability, especially in data transformation and preprocessing pipelines.
 
-
 ## Dropping columns with `.drop()`
-The [`.drop()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.drop.html#pandas.DataFrame.drop) method in Pandas is used to remove rows or columns from a DataFrame. This method is highly versatile, allowing you to specify whether you want to drop labels from the index (rows) or columns by setting the `axis` parameter accordingly (`axis=0` for __rows__, `axis=1` for __columns__). You can also directly specify whether to drop labels from the index or columns using the `index` or `columns` parameters, respectively. By default, `drop()` does not modify the original DataFrame in place; instead, it returns a new DataFrame with the specified rows or columns removed, unless you set `inplace=True`.
+```python
+DataFrame.drop(labels=None, *, axis=0, index=None, columns=None, level=None, inplace=False, errors='raise')
+```
+
+>Drop specified labels from rows or columns.
+>
+>Remove rows or columns by specifying label names and corresponding axis, or by directly specifying index or column names. When using a multi-index, labels on different levels can be removed by specifying the level. See the user guide for more information about the now unused levels.
+
+The [`.drop()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.drop.html) method in Pandas is used to remove rows or columns from a DataFrame. This method is highly versatile, allowing you to specify whether you want to drop labels from the index (rows) or columns by setting the `axis` parameter accordingly (`axis=0` for __rows__, `axis=1` for __columns__). You can also directly specify whether to drop labels from the index or columns using the `index` or `columns` parameters, respectively. By default, `drop()` does not modify the original DataFrame in place; instead, it returns a new DataFrame with the specified rows or columns removed, unless you set `inplace=True`.
 
 Here's a basic example of its usage to drop columns:
 
@@ -165,7 +173,6 @@ updated_metrics_df = metrics_df.drop(index='B').drop('Returns', axis=1)
 print(updated_metrics_df)
 ```
 In this detailed example, the `drop()` method is first used to remove the row corresponding to product `B` by specifying its `index` label. Then, it's used again to drop the `Returns` column by setting `axis=1`. The operations are chained together, showcasing how `drop()` can be used flexibly to remove both rows and columns in a single statement. This method is essential for data cleaning and preprocessing, enabling you to easily remove irrelevant or unnecessary data from your DataFrame.
-
 
 ## Filtering columns using `df[]` notation
 Filtering columns in a Pandas DataFrame using the `df[]` notation is straightforward and intuitive. This approach is commonly used for selecting a subset of columns from the DataFrame by specifying the column names directly within square brackets. If you want to select a single column, you can pass the column name as a string. To select multiple columns, you pass a list of column names.
@@ -216,7 +223,15 @@ print(report_df)
 In this example, by using the `df[]` notation with a list of column names, you can easily filter out the columns relevant to the report, namely `Name` and `Department`. This method of filtering is very effective for quickly accessing or transforming subsets of the data based on column names, making it a fundamental technique for data manipulation and analysis in Pandas.
 
 ## Calculate summary statistics on groups using `.groupby()`
-The [`.groupby()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html#pandas.DataFrame.groupby) method in Pandas is a cornerstone of data analysis, enabling the grouping of data based on one or more keys. It involves splitting the data into groups based on some criteria, applying a function to each group independently, and then combining the results into a data structure. This method is particularly useful for aggregate computations, such as summing data, computing averages, or applying statistical methods over grouped data.
+```python
+DataFrame.groupby(by=None, axis=_NoDefault.no_default, level=None, as_index=True, sort=True, group_keys=True, observed=_NoDefault.no_default, dropna=True)
+```
+
+> Group DataFrame using a mapper or by a Series of columns.
+> 
+> A groupby operation involves some combination of splitting the object, applying a function, and combining the results. This can be used to group large amounts of data and compute operations on these groups.
+
+The [`.groupby()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.groupby.html) method in Pandas is a cornerstone of data analysis, enabling the grouping of data based on one or more keys. It involves splitting the data into groups based on some criteria, applying a function to each group independently, and then combining the results into a data structure. This method is particularly useful for aggregate computations, such as summing data, computing averages, or applying statistical methods over grouped data.
 
 Here's a basic example of its usage:
 
@@ -258,7 +273,13 @@ In this detailed example, the `groupby()` method is used to group the sales data
 The `groupby()` method is incredibly flexible, supporting various aggregation functions such as `mean()`, `median()`, `count()`, `max()`, and `min()`, among others. It's an essential tool for data exploration, allowing you to efficiently organize, summarize, and analyze your data based on specific grouping criteria.
 
 ## Create summary statistics using `.agg()`
-The [`.agg()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.agg.html#pandas.DataFrame.agg) method in Pandas, short for "aggregate", is used in conjunction with `groupby()` to perform multiple aggregation operations on one or more columns of grouped data. It's a powerful tool for summarizing data, allowing you to apply different functions to different columns and perform multiple aggregations at once. This method enhances the flexibility of data analysis tasks by enabling concise, readable code for complex aggregations.
+```python
+DataFrame.agg(func=None, axis=0, *args, **kwargs)
+```
+
+> Aggregate using one or more operations over the specified axis.
+
+The [`.agg()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.agg.html) method in Pandas, short for "aggregate", is used in conjunction with `groupby()` to perform multiple aggregation operations on one or more columns of grouped data. It's a powerful tool for summarizing data, allowing you to apply different functions to different columns and perform multiple aggregations at once. This method enhances the flexibility of data analysis tasks by enabling concise, readable code for complex aggregations.
 
 Here's a basic usage example:
 
@@ -310,6 +331,11 @@ print(aggregated_sales)
 In this detailed example, the `agg()` method is used to calculate the total `(sum)`, average `(mean)`, and maximum `(max)` revenue for each product. This approach provides a comprehensive overview of the sales performance of each product, showcasing the versatility of `agg()` for conducting sophisticated data analysis with minimal code.
 
 ## Sort rows using `.sort_values()`
+```python
+DataFrame.sort_values(by, *, axis=0, ascending=True, inplace=False, kind='quicksort', na_position='last', ignore_index=False, key=None)
+```
+> Sort by the values along either axis.
+
 The [`.sort_values()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.sort_values.html) method in Pandas is utilized to sort a DataFrame or Series based on the values in one or more columns. This method offers flexibility in sorting, allowing ascending or descending order, and can handle missing values as specified. It's a fundamental tool for data analysis, enabling you to order your data in a meaningful way for inspection, reporting, or further analysis.
 
 ### Basic Usage
