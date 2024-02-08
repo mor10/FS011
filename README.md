@@ -1,5 +1,5 @@
-# FS011
-Notes from Programming in Python for Data Science course, compiled by Morten (and contributors?) in collaboration with [this custom GPT](https://chat.openai.com/g/g-R2DHFc0v6-python-for-data-science-101).
+# FS011 Notes
+Notes from UBC's [Programming in Python for Data Science](https://extendedlearning.ubc.ca/courses/programming-python-data-science/fs011) course, compiled by Morten (and contributors?) in collaboration with [this custom GPT](https://chat.openai.com/g/g-R2DHFc0v6-python-for-data-science-101).
 
 ## Table of contents
 - [Module 1](https://github.com/mor10/FS011/blob/main/module_1.md)
