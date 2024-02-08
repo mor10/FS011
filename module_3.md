@@ -1,8 +1,8 @@
 # Module 3: Tidy Data and Joining Dataframes
 
-## Learning outcomes
-- Explain what tidy data is.
-- Use `.melt()` and `.pivot()` to reshape dataframes, specifically to make tidy data.
+## Learning outcomes (ToC)
+- [Explain what tidy data is.](#Tidy-data)
+- Use [`.melt()`](#) and `.pivot()` to reshape dataframes, specifically to make tidy data.
 - Learn how to reset the index of a dataframe.
 Combine dataframes using `.merge()` and `.concat()` and know when to use these different methods.
 Understand the different joining methods.
@@ -19,7 +19,7 @@ Think one row for each thing, one column for each type of data about the thing, 
 
 An example of untidy / non-tidy data is when two or more variables are mixed in a single column (eg both 'protein' and 'calories'). To make this data tidy, you have to first filter based on each variable.
 
-## Statistical Questions and Tidy Data
+### Statistical Questions and Tidy Data
 The concept of Tidy data depends on whether the data is easy to process. 
 
 You can modify (filter/transform) existing dataframes with more data or a different structure to make it tidy for your specific task: 
@@ -43,7 +43,14 @@ Africa     Algeria  2015  25.6
 ```
 
 ## Reshaping with `.pivot()`
-`.pivot()` can be used to transform long dataframes into wide dataframes. For example, if you have a long df with a 'nutrition' column containing two variables - 'calories' and 'protein' - you can transform it into a wide df with a column for 'calories' and another for 'protein'.
+```python
+DataFrame.pivot(*, columns, index=_NoDefault.no_default, values=_NoDefault.no_default)```
+
+> Return reshaped DataFrame organized by given index / column values.
+>
+> Reshape data (produce a “pivot” table) based on column values. Uses unique values from specified index / columns to form axes of the resulting DataFrame. This function does not support data aggregation, multiple values will result in a MultiIndex in the columns.
+
+[`.pivot()`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.pivot.html) can be used to transform long dataframes into wide dataframes. For example, if you have a long df with a `nutrition` column containing two variables - `calories` and `protein` - you can transform it into a wide df with a column for `calories` and another for `protein`.
 
 So for this:
 ```
