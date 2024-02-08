@@ -5,6 +5,7 @@ Notes from UBC's [Programming in Python for Data Science](https://extendedlearni
 - [Module 1](https://github.com/mor10/FS011/blob/main/module_1.md)
 - [Module 2](https://github.com/mor10/FS011/blob/main/module_2.md)
 - [Module 3](https://github.com/mor10/FS011/blob/main/module_3.md)
+- [Module 4](https://github.com/mor10/FS011/blob/main/module_4.md)
 
 __⚠️ These notes are not official teaching material. Use at your own peril.__
 
