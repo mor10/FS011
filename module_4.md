@@ -5,6 +5,9 @@
 - [Convert data types by casting](#convert-data-types-by-casting)
 - [Split strings into lists with `.list()`](#split-strings-into-lists-with-split)
 - [Understanding lists (arrays by another name)](#lists---arrays-by-another-name)
+- [Turn lists into DataFrames](#turn-lists-into-dataframes)
+- [Tuples - immutable lists](#tuples---lists-but-immutable)
+- [Sets - piles of data without repeats](#sets---unordered-no-duplicates-piles-of-data)
 - [Use Python to determine the type and structure of an object.]
 - [Demonstrate how to create data structures and convert them to another.]
 - [Identify which operations can be applied to different data types and columns dtypes.]
