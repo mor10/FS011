@@ -44,7 +44,8 @@ Africa     Algeria  2015  25.6
 
 ## Reshaping with `.pivot()`
 ```python
-DataFrame.pivot(*, columns, index=_NoDefault.no_default, values=_NoDefault.no_default)```
+DataFrame.pivot(*, columns, index=_NoDefault.no_default, values=_NoDefault.no_default)
+```
 
 > Return reshaped DataFrame organized by given index / column values.
 >
