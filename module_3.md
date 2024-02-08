@@ -8,7 +8,7 @@
 - [Joining dataframes with `.merge()`](#Joining-Dataframes-Using-merge)
 - [Joining dataframes with `.concat()`](#joining-using-concat)
 - [Deciding between `.merge()` and `.concat()`](#choosing-between-merge-and-concat)
-- [How to reset the index of a dataframe.]
+- [How to reset the index of a dataframe.](#how-to-reset-the-index-using-reset_index)
 
 
 ## Tidy data
