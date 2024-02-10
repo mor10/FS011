@@ -42,6 +42,42 @@ empty_object = ''
 ```
 the empty object has the type of `string` because of the empty quotes. If no quotes, it would become a `NoneType`.
 
+### Examples of all main data types
+```python
+# String
+my_str = "Hello, Python!"
+print("String:", my_str)
+
+# Integer
+my_int = 42
+print("Integer:", my_int)
+
+# Floating Point Number
+my_float = 3.14
+print("Float:", my_float)
+
+# Boolean
+my_bool = True
+print("Boolean:", my_bool)
+
+# List
+my_list = [1, 2, 3, "Python"]
+print("List:", my_list)
+
+# Tuple
+my_tuple = (1, 2, 3, "Python")
+print("Tuple:", my_tuple)
+
+# Set
+my_set = {1, 2, 3, "Python"}
+print("Set:", my_set)
+
+# Dictionary
+my_dict = {"language": "Python", "version": 3.8}
+print("Dictionary:", my_dict)
+
+```
+
 ### String methods
 - `.len()` - Returns the length of the string as an `int`
 - `.upper()` - Returns the string in uppercase.
