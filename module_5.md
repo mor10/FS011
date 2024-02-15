@@ -6,8 +6,9 @@
 - [Explain the DRY principle and how it can be useful.](#dry-principle)
 - [Write `for` loops to repeatedly run code.](#for-loops)
 - [Looping with `range()`](#looping-with-range)
-- Describe the expected outcome of code with nested loops.
-- Define and use a function that accepts parameters and returns values.
+- [Nested loops](#nested-loops)
+- [Stop an iteration](#stop-an-iteration)
+- [How to create functions](#functions)
 
 ## Conditional Statements
 Conditional statements test a condition (if something is true or false) and act accordingly. This is self-explanatory:
@@ -397,3 +398,74 @@ print(list(even_gen))  # Convert to list to print all at once
 Comprehensions are not only syntactically concise but also tend to be faster than using equivalent `for` loops, as they are optimized for their respective operations. They are widely used in Python for data manipulation, filtering, and transformation tasks, making code more expressive and readable.
 
 ## Nested loops
+Nested loops are just loops inside other loops.
+
+```python
+suits = ["❤︎","♦︎"]
+faces = ['Jack', 'Queen', 'King']
+
+cards = list()
+for suit in suits:
+    for face in faces: 
+        cards.append(face + ' of ' + suit)
+cards
+```
+
+## Stop an iteration
+Use the `break` keyword. It stops the iteration. Nuff said.
+
+## Iterating on a number
+Instead of
+
+```python
+some_number = some_number + 1
+```
+
+we can write
+
+```python
+some_number += 1
+```
+
+Same with negative.
+
+## Functions
+`functions` are `methods` by another name, essentially.
+
+The syntax for defining a function in Python involves the `def` keyword, followed by the function name with parentheses, and a colon. Inside the parentheses, you can optionally include parameters (also known as arguments) that the function can accept to process its task. After the colon, the indented block of code beneath the function definition is executed each time the function is called. Here's a breakdown of the syntax:
+
+```python
+def function_name(parameters):
+    """Docstring to explain the function's purpose."""
+    # Function body
+    return value
+```
+
+- **`def`**: This keyword starts the function definition.
+- **`function_name`**: This is the identifier you're assigning to the function. It should be descriptive and follow standard Python naming conventions.
+- **`parameters`**: These are variables passed into the function. They are optional; a function might not need any parameters.
+- **`"""Docstring"""`**: This is an optional documentation string that describes what the function does. It's not executed but is highly recommended for better code readability and maintainability.
+- **Function body**: This is the block of code that performs the function's main task. It's indented under the function definition.
+- **`return`**: This keyword is used to exit a function and optionally pass back an expression to the caller. The `return` statement is optional; if omitted, the function will return `None` by default.
+
+### Example: A Simple Function
+
+Here's a simple function that takes two parameters, adds them together, and returns the result:
+
+```python
+def add_numbers(a, b):
+    """Add two numbers and return the sum."""
+    return a + b
+
+# Calling the function
+result = add_numbers(5, 3)
+print(result)  # Output: 8
+```
+
+In this example, `add_numbers` is the function name, `a` and `b` are parameters, and the function body consists of a single line that returns the sum of `a` and `b`. The `print(result)` line demonstrates how to call the function with arguments `5` and `3`, and then print the result.
+
+### Parameters and Arguments
+For clarity (because this is confusing even in the module docs):
+
+- __Parameter__ - A variable listed inside the parentheses in the function definition. It represents the data that the function expects to receive when it is called.
+- __Argument__ - The actual value or data passed to the function when it is called.
