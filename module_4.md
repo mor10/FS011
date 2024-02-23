@@ -1,4 +1,4 @@
-# Basic Python
+# Module 4: Basic Python
 
 ## Learning goals (ToC)
 - [Python objects and data types](#python-objects-and-data-types)

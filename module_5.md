@@ -1,4 +1,4 @@
-# Making Choices and Repeating Iterations
+# Module 5: Making Choices and Repeating Iterations
 
 ## Learning Goals (ToC)
 - [Conditional `if`/`elif`/`else` statements](#conditional-statements)
