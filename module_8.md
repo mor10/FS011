@@ -9,6 +9,10 @@
 - [Boolean Indexing](#boolean-indexing)
 - [DataFrames are arrays!](#dataframes-are-arrays)
 - [Constants and functions](#constants-and-functions)
+- [Multi-dimensional arrays](#multi-dimensional-arrays)
+- [Array shapes](#array-shapes)
+- [Indexing and slicing arrays](#indexing-and-slicing-2d-arrays)
+- [Working with null values](#working-with-null-values)
 
 - Describe the shape, dimension and size of an array.
 - Identify null values in a dataframe and manage them by removing them using `.dropna()` or replacing them using `.fillna()`.
@@ -111,7 +115,7 @@ stepped # returns array([0, 2, 4, 6, 8])
 ```
 
 ## `np.linspace()`
-The `linspace(start, stop, steps)` function produces `steps` number of evenly spaced items between `start` and `stop`. The items default to `float`.
+The `linspace(start, stop, steps)` function ("__Lin__early __Space__d") produces `steps` number of evenly spaced items between `start` and `stop`. The items default to `float`.
 
 ```python
 spaced = np.linspace(1,5,10)
@@ -272,4 +276,114 @@ NumPy has baked-in constants and functions including:
 - `np.diff()` - the difference between element (left element subtracted from the right element)
 - `np.log()` - logarithm
 - `np.sin()` - sin
+
+## Multi-dimensional Arrays
+Multi-dimensional arrays allow you to create nested arrays of arrays - advanced data structures.
+
+```python
+list_2d = [[1, 2], [3, 4], [5, 6]]
+array_2d = np.array(list_2d)
+array_2d # returns array([[1, 2],
+         # [3, 4],
+         # [5, 6]])
+```
+
+The array functions allow you to create multi-dimensional arrays in a consistent way:
+
+```python
+np.zeros((3,4)) # 3 rows, 4 columns
+
+np.random.rand(4, 2) # 4 rows, 2 columns
+
+# Reshape a one-dimensional array to a multi-dimensional array:
+np.arange(0,12).reshape(3,4)
+```
+
+`reshape(rows, columns)` allows you to reshape a 1D array to a multi-dimensional array.
+
+## Array shapes
+We use nouns (properties) to get info about the shape of an array:
+
+- `.ndim`: the number of dimensions of an array
+- `.shape`: the number of elements in each dimension (like calling `len()` on each dimension)
+- `.size`: the total number of elements in an array (i.e., the product of `.shape`)
+
+## Indexing and slicing 2D arrays
+See the following example:
+
+```python
+arr2 = np.arange(0,12).reshape(3,4)
+arr2 # returns array([[ 0,  1,  2,  3],
+     #                [ 4,  5,  6,  7],
+     #                [ 8,  9, 10, 11 ]])
+
+arr2[1, 2] # returns 6 -> [row,col]
+arr2[2] # returns row 2 -> array([ 8,  9, 10, 11])
+arr2[:,2] # just like iloc[] returns column 2 -> array([ 2,  6, 10])
+arr2[:2,1:] # first 2 rows, last 3 columns
+
+# Set a value:
+arr2[1,1] = 999
+arr2 # returns array([[ 0,  1,  2,  3],
+     #                [ 4,  999,  6,  7],
+     #                [ 8,  9, 10, 11 ]])
+
+```
+
+`.T` for Transpose converts rows to columns and vice versa:
+
+```python
+arr2.T # returns array([[ 0,  4,  8],
+       #                [ 1,  999,  9],
+       #                [ 2,  6, 10],
+       #                [ 3,  7, 11]])
+```
+
+## Working with null values
+Null-values, aka `NaN` or `NA` values are empty values - "Not a Number". Computers don't like emptiness. It makes them stressed.
+
+`df.info()` is used to check a DataFrame from `NaN` values. It outputs a "Non-null count" for each column.
+
+It's good practice to start a project by checking `df.info()` so you know if you have some emptiness you need to fill.
+
+If we find a column with null values, we can use `.isnull()` to identify the rows with null entries. `.isnull()` returns a Boolean series where `True` is a null value.
+
+```python
+# Find rows with null values in a specific column:
+cycling[cycling['Distance'].isnull()]
+
+# Find rows with null values in ANY column:
+cycling[cycling.isnull().any(axis=1)]
+```
+
+The last example uses `.any()` to signify any column in the DataFrame. Duh.
+
+### Dealing with null values
+
+Two methods:
+
+`.dropna()`: Drops any rows with null values in any column.
+`.dropna(subset=['column'])` drops rows only in the 'column' column.
+
+`.fillna()`: Fills the null value with whatever value we define.
+`df.fillna(value=0)` fills the NaN values with the `float` `0.00`.
+
+Introducing random data like `0.00` into your data may fuck up your data. You can also fill with other stuff, for example the mean of the other numbers in the column (neutral value):
+
+```python
+cycling_mean_fill = cycling.fillna(value=cycling['Distance'].mean().round(2))
+```
+
+You can also use built-in methods to solve this problem. For example:
+
+```python
+# Grab the next valid row observation and use it:
+cycling.fillna(method='bfill')
+
+# Grab the previous valid row observation and use it:
+cycling.fillna(method='ffill')
+```
+
+
+
 
