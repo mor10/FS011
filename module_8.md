@@ -13,11 +13,8 @@
 - [Array shapes](#array-shapes)
 - [Indexing and slicing arrays](#indexing-and-slicing-2d-arrays)
 - [Working with null values](#working-with-null-values)
-
-- Describe the shape, dimension and size of an array.
-- Identify null values in a dataframe and manage them by removing them using `.dropna()` or replacing them using `.fillna()`.
-- Manipulate non-standard date/time formats into standard Pandas datetime using `pd.to_datetime()`.
-- Find, and replace text from a dataframe using verbs such as `.replace()` and `.contains()`.
+- [Dates and Time](#dates-and-time)
+- [String manipulation](#string-manipulation)
 
 ## NumPy
 "NumPy" stands for "__Num__erical __Py__thon Extensions" and is a library helping do mathy things.
@@ -411,4 +408,204 @@ canucks_comf.loc[canucks_comf['Salary'].isnull(), "Wealth"] = "unknown"
 canucks_comf
 ```
 
+## Dates and Time
+Parsing dates as strings or objects is complex and tedious. That's why we never do that, in any programming language. Python is no different.
 
+Pandas is partially built using the [`datetime`](https://docs.python.org/3/library/datetime.html) library.
+
+When importing data into a DataFrame, we can use the `parse_dates` argument to parse the values of a column as `datetime64` data:
+
+```python
+cycling_dates = pd.read_csv('cycling_data.csv', parse_dates = ['Date'])
+```
+
+Once that's done the data is treated as true date and time and we can do things like sort based on the date.
+
+```python
+cycling_dates.sort_values('Date')
+```
+
+If the original data has the date and time split across multiple columns (eg month, date, year, time, etc) we can still import it using `parse_dates`, we just need to break it down some more:
+
+```python
+(pd.read_csv('cycling_data_split_time.csv',
+              parse_dates={'Date': ['Year', 'Month', 'Day', 'Clock']})
+              .head())
+```
+
+To convert existing data in a DataFrame to a datetime dtype, do use the `pd.to_datetime()` method like this:
+
+```python
+new_cycling = cycling.assign(Date = pd.to_datetime(cycling['Date']))
+```
+
+Unsurprisingly Pandas has a [ton of datetime tools](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#time-date-components) including:
+
+- `.dt.year`
+- `.dt.month`
+- `.dt.month_name()`
+- `.dt.day`
+- `.dt.day_name()`
+- `.dt.hour`
+- `.dt.minute`
+
+These are self-explanatory.
+
+When you select an individual entry of the datetype dtype you get a timestamp. From that timestamp you can derive any information based on the tools above.
+
+The `.diff()` method outputs the difference between two values. It can be used as below to output the difference in time between different entries:
+
+```python
+cycling_intervals = new_cycling['Date'].sort_values().diff()
+```
+
+This outputs a `timedelta64` series describing an interval of time. We can extract measurements from a `timedelta64` object as `days`, `seconds`, and `microseconds` like this:
+
+```python
+cycling_intervals[1].seconds
+```
+
+Time is just a number, so we can do things like summary statistics with `min()`, `max()`, etc on a time object.
+
+### Reference example from the lesson
+
+```python
+DAYS_PER_YEAR = 365.25
+
+# Read in the canucks.csv file from the data folder and parse the "Birth Date" column
+# Save this as an object named canucks
+
+canucks = pd.read_csv('data/canucks.csv', parse_dates = ['Birth Date'])
+
+# Find the oldest player's date of birth 
+# Save the Timstamp as oldest
+
+oldest = canucks['Birth Date'].min()
+
+# Find the youngest player's date of birth 
+# Save the Timestamp as youngest
+
+youngest = canucks['Birth Date'].max()
+
+# Find the age difference between the two players in number of years to 2 decimal places
+# Save this an an object name age_range
+
+age_range = round((youngest - oldest).days/DAYS_PER_YEAR, 2)
+
+# Display age_range
+
+age_range
+```
+
+## String manipulation
+[Full string documentation.](https://pandas.pydata.org/pandas-docs/stable/user_guide/text.html#method-summary)
+
+Some string methods:
+
+- `.upper()`: set to uppercase
+- `.lower()`: set to lowercase
+- `.count('i')`: how many 'i's
+- `.split('i')`: split along 'i's into series
+- `.capitalize()`: capitalizes the first word in a string
+- `.title()`: capitalizes every word in a string
+- `.strip()`: removes characters starting or ending a string - default to remove whitespace at front and/or back.
+
+In a DataFrame, `str` entries have the `object` dtype.
+
+To target every entry in a column in a DataFrame with a string manipulation, use the `.str.` prefix:
+
+```python
+upper_cycle = cycling.assign(Comments = cycling['Comments'].str.upper())
+rain_cycle = upper_cycle.assign(Rain = upper_cycle['Comments'].str.count('RAIN'))
+```
+
+If you want to, you can use `.str.split()` to split each word into its own column:
+
+```python
+upper_cycle['Comments'].str.split(expand=True)
+```
+
+The `+` symbol can be used for string concatenation. This also applies when doing the column manipulation thing, in the same way as above.
+
+```python
+combined_cycle = cycling.assign(Distance_str = cycling['Distance'].astype('str') + ' km')
+```
+
+### Reference example from the lesson
+
+```python
+import pandas as pd
+
+canucks = pd.read_csv('data/canucks.csv', parse_dates = ['Birth Date'])
+
+# Convert the Position and Country columns into uppercase 
+# Save this in a dataframe named canucks_upper
+
+canucks_upper = canucks.assign(Position = canucks['Position'].str.upper(),
+                               Country = canucks['Country'].str.upper())
+
+# Create a new column in the canucks_upper dataframe named number_ts
+# where you count the total number of times the letter T
+# (lowercase or uppercase) appears in their name
+# Save this  dataframe named as canucks_upper_ts
+
+canucks_upper_ts = canucks_upper.assign(number_ts=canucks_upper['Player'].str.lower().str.count('t'))
+
+# How many players have more than 1 letter T in their name? 
+
+canucks_upper_ts[canucks_upper_ts['number_ts'] > 1].shape[0]
+```
+
+### Other useful methods
+The `.replace(target,result)` method does what it sounds like
+
+```python
+cycling_rain = cycling_lower.assign(Comments = cycling_lower['Comments'].str.replace('whether', 'weather'))
+```
+
+`.contains('target')` finds any entry that contains the target:
+
+```python
+cycling_lower['Comments'].str.contains('rain')
+cycling_lower[cycling_lower['Comments'].str.contains('rain')]
+
+# Replace all entries mentioning "rain" with just "rained":
+cycling_lower.loc[cycling_lower['Comments'].str.contains('rain'), 'Comments'] = 'rained'
+```
+
+This last example finds any mention and then replaces the entire string, so "tut tut, it looks like rain" gets replaced with "rained".
+
+### More examples from the lesson
+```python
+import pandas as pd
+
+lego = pd.read_csv('data/lego-sets.csv')
+
+# Convert the name column in the lego dataset to lowercase and
+# overwrite the dataframe by saving it as an object named lego 
+
+lego = lego.assign(name = lego['name'].str.lower())
+
+
+# Filter the dataset to find all the lego sets that contain "weetabix"  in the name column
+# Save this as a object named lego_weetabix
+
+lego_weetabix = lego[lego['name'].str.contains('weetabix')]
+
+
+# Replace the word "weetabix" in the name column of the lego_wetabix dataframe
+# with the string "cereal-brand"
+# Save this in an object called lego_cereal
+
+lego_cereal = lego_weetabix.assign(name = lego_weetabix['name'].str.replace('weetabix', 'cereal-brand'))
+
+
+# If the row contains the word "promotional" in the name column,
+# change the entire value to "cereal-brand freebie"
+
+lego_cereal.loc[lego_cereal['name'].str.contains('promotional'), 'name'] = 'cereal-brand freebie'
+
+# Display lego_cereal
+
+lego_cereal
+```
